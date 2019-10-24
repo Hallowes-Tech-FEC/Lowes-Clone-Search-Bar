@@ -11,6 +11,7 @@ import Icon from '@mdi/react';
 import Paper from '@material-ui/core/Paper';
 import StepLabel from "@material-ui/core/StepLabel";
 import { mdiCartOutline } from '@mdi/js';
+import './searchBar.css';
 
 class SearchBar extends React.Component {
     constructor (props) {
@@ -31,6 +32,7 @@ class SearchBar extends React.Component {
     componentDidMount () {
         Axios.get('/items')
         .then (res => {
+            console.log(res);
             let items = res.data.map(item => item.name);
             this.setState({
                 possibleNames: items
