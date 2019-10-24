@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon app.js",
+    "server-dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "install": "^0.13.0",
+    "jquery": "^3.4.1",
     "mysql": "^2.17.1",
     "node": "^12.12.0",
     "nodemon": "^1.19.3",
