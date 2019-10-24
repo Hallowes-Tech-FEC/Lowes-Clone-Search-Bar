@@ -17,7 +17,7 @@ class SearchBar extends React.Component {
         super (props);
         this.state = {
             input: "",
-            possibleNames: ["chair", "chairs", "table", "tables"]
+            possibleNames: []
         }
     }
 
@@ -66,10 +66,12 @@ class SearchBar extends React.Component {
                                 <SearchIcon />
                             </IconButton>
                             <input type="text" 
-                                className="overSearch" 
+                                className="overSearch"
+                                autoComplete="off"
                                 name="search" 
                                 placeholder="What are you looking for today?"
                                 list="suggestions"
+                                id="searchInput"
                                 onChange={this.updateInput.bind(this)}
                             ></input>
                             <datalist id="suggestions">
@@ -77,7 +79,8 @@ class SearchBar extends React.Component {
                                     return (
                                         <option value={name} key={name}></option>
                                     )
-                                }) : null}
+                                    }) : null
+                                }
                             </datalist>
                         </Paper>
                         <div className="iconGroupHead">            
