@@ -1,0 +1,183 @@
+#banner {
+    background-color:#0471AF; 
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Helvetica,Arial,sans-serif;
+    color: white;
+    height: 38px;    
+}
+
+.bannerGroupText {
+    width: 100%;
+    margin-left: 22%;
+    align-items: center;
+    justify-content: center
+}
+
+#leftset {
+    padding-bottom: 1px;
+}
+
+#rightset {
+    margin-left: 32.2%;
+    width: 500px;
+}
+
+.indi {
+    float: left;
+    padding: 0px 10px 0px 10px;
+    height: 100%;
+  }
+
+.fontban {
+    font-weight: 100;
+}
+
+#iconGroup {
+    margin-left: -3.38%;
+    /* padding-top: 3px; */
+}
+
+#next2Icon {
+    margin-left: -9.5%;
+    
+}
+
+#starterTag {
+    padding-top: 3px;
+    margin-left: -5%;
+}
+
+.ship {
+    background-color: rgb(229, 231, 228);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Helvetica,Arial,sans-serif;
+    color:  rgb(39, 37, 37);
+    width: 100%;
+    height: 29px;   
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10%; /*once cameron gets his then take off*/
+}
+
+.free {
+    padding-top: 5px;
+    /* margin-left: 42%; */
+}
+
+.search {
+    padding: '2px 4px';
+    display: 'flex';
+    align-items: 'center';
+}
+
+.searchIcon {
+    padding: 0;
+    width: 0%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+}
+
+.overSearch {
+
+}
+
+input[type=text] {
+    padding: 0;
+    transition: all 0.5s ease-in;
+    width: 300px;
+    font-size: 16px;
+    font-family: Helvetica,Arial,sans-serif;
+    border: none;
+    line-height: 2px;
+}
+
+input[type=text]:focus {
+    width: 642px;
+    outline: none;
+}
+
+.sectionDesktop {
+    display: none;
+}
+
+.sectionMobile {
+    display: flex;
+}
+
+.searchBarDiv {
+    max-width: 1031.06px;
+    margin-left: 22.5%;
+}
+
+.headerCat {
+    background-color:white; 
+    border: none; 
+    outline: none;
+    font-size: 18px;
+    font-family: "DIN Next",Helvetica,Arial,sans-serif;
+    border-bottom: 2px solid transparent;
+    color: #333;
+    font-size: 18px;
+    margin-right: 60px;
+    padding: 4px 0;
+    margin-bottom: 0%;
+    font-weight: 700;
+    float: left;
+}
+
+#tab1 {
+    transition: display 1.5s, opacity 0.5s linear;
+}
+
+#tab2 {
+    transition: display 1.4s, opacity 0.5s linear;
+}
+
+#tab3 {
+    transition: display 1.3s, opacity 0.5s linear;
+}
+
+.headerCat:hover {
+    border-bottom: 2px solid rgb(36, 148, 223);
+  }
+  
+.search {
+    background-color:white; 
+    border: 1px solid black;
+}
+
+#searchBar {
+    display: flex;
+}
+
+.iconGroupHead {
+    margin-left: 87%;
+    width: 100%;
+    position: absolute;
+}
+
+.iconPersonSize {
+    margin-right: 100%;
+    transform: scale(1.25);
+}
+
+.iconCart {
+    margin-left: 15%;
+}
+
+.iconCartSize {
+    transform: scale(1.2);
+}
+
+.iconCart:hover {
+    border-bottom: 2px solid rgb(36, 148, 223);
+}
+
+.iconPerson:hover {
+    border-bottom: 2px solid rgb(36, 148, 223);
+}
