@@ -1,24 +1,30 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import Axios from 'axios';
 
 class SearchBar extends React.Component {
     constructor (props) {
         super (props);
         this.state = {
             input: "",
-            suggestions: [],
             possibleNames: ["chair", "chairs", "table", "tables"]
         }
     }
 
     updateInput () {
         let newInput = document.getElementById("searchInput").value;
-        let newSuggestions = this.state.possibleNames.filter((name) => 
-            name.substring(0, newInput.length) === newInput
-        )
         this.setState({
             input: newInput,
-            suggestions: newSuggestions
+        })
+    }
+
+    componentDidMount () {
+        Axios.get('/items')
+        .then (res => {
+            let items = res.data.map(item => item.name);
+            this.setState({
+                possibleNames: items
+            })
         })
     }
 
@@ -32,11 +38,11 @@ class SearchBar extends React.Component {
                 >
                 </input>
                 <datalist id="suggestions">
-                    {this.state.possibleNames.map(name => {
+                    {this.state.input !== "" ? this.state.possibleNames.map(name => {
                         return (
-                            <option value={name}></option>
+                            <option value={name} key={name}></option>
                         )
-                    })}
+                    }) : null}
                 </datalist>
             </div>
         )
