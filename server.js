@@ -10,7 +10,7 @@ app.use(cors());
 
 app.use(express.static(__dirname + '/client/dist'));
 
-app.get("/items", (req, res) => {
+app.get("/searches", (req, res) => {
     db.getItems((err, data) => {
         if (err) {
             res.send(err);

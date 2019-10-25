@@ -30,7 +30,7 @@ class SearchBar extends React.Component {
     }
 
     componentDidMount () {
-        Axios.get('/items')
+        Axios.get('http://hallows-search-bar.us-east-2.elasticbeanstalk.com/searches')
         .then (res => {
             console.log(res);
             let items = res.data.map(item => item.name);
