@@ -24,17 +24,20 @@ class SearchBar extends React.Component {
             divLength: window.innerWidth,
             isOpen: false,
             cart: 0,
+
         };
         this.updateDisplay = this.updateDisplay.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
+            
     changeItem(itemId) {
         let event = new CustomEvent("changeItem", {
             detail: itemId
         })
         window.dispatchEvent(event);
     }
+
     updateDisplay() {
         this.setState({
             divLength: window.innerWidth
@@ -46,19 +49,18 @@ class SearchBar extends React.Component {
             input: newInput,
         });
     }
+
     showPopover(event) {
         event.preventDefault();
         this.props.togglePopover(event.currentTarget);
     };
-    // handleRequestClose = () => {
-    //     this.props.togglePopover();
-    //   };
+
     handleClick(isOpen) {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
-    handleClose() {
+
     }
     componentDidMount () {
         Axios.get('http://hallows-search-bar.us-east-2.elasticbeanstalk.com/searches')
@@ -70,6 +72,7 @@ class SearchBar extends React.Component {
             });
             
         });
+
         window.addEventListener('addToCart', event => {
             this.setState({
                 cart: this.state.cart + event.detail,
@@ -85,6 +88,7 @@ class SearchBar extends React.Component {
                 }
             }
         })
+
     }
     render () {
         document.addEventListener('click', (event) => {
@@ -192,7 +196,9 @@ class SearchBar extends React.Component {
                                         <PersonIcon className="iconPerson"/>
                                     </IconButton>
                                     <IconButton aria-label="Cart" className="iconCartSize">
+
                                         <Badge badgeContent={this.state.cart} color="secondary">
+
                                             <Icon  className="iconCart" path={mdiCartOutline}
                                                 title="Cart Count"
                                                 size={1}
