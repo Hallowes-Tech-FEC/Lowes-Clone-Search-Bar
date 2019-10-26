@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const config = require('./config');
+// const config = require('./config');
 
 let db = mysql.createConnection({
     host: 'fec-hallowes-searchbar.cgmhnhykd7qi.us-east-2.rds.amazonaws.com',

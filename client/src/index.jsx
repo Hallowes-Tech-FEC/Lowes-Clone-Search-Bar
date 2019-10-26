@@ -8,13 +8,26 @@ import Badge from '@material-ui/core/Badge';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonIcon from '@material-ui/icons/Person';
 import Icon from '@mdi/react';
+import Drawer from '@material-ui/core/Drawer';
 import Paper from '@material-ui/core/Paper';
 import StepLabel from "@material-ui/core/StepLabel";
 import Menu from '@material-ui/core/Menu';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { mdiCartOutline } from '@mdi/js';
+import { mdiKnifeMilitary } from '@mdi/js';
+import { mdiWrench } from '@mdi/js';
+import { mdiFormatListBulleted } from '@mdi/js';
+import { mdiCubeOutline } from '@mdi/js';
 import './searchBar.css';
+
+
+
 class SearchBar extends React.Component {
     constructor (props) {
         super (props);
@@ -24,11 +37,13 @@ class SearchBar extends React.Component {
             divLength: window.innerWidth,
             isOpen: false,
             cart: 0,
-
+            anchorEl: null,
+            right: false,
         };
         this.updateDisplay = this.updateDisplay.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.toggleDrawer = this.toggleDrawer.bind(this);
     }
             
     changeItem(itemId) {
@@ -53,15 +68,27 @@ class SearchBar extends React.Component {
     showPopover(event) {
         event.preventDefault();
         this.props.togglePopover(event.currentTarget);
-    };
+    }
 
     handleClick(isOpen) {
+        this.setState({
+            anchorEl: document.getElementById("vertIcon"),
+            isOpen: !this.state.isOpen,
+        });
+    }
+
+    handleClose() {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
 
+    toggleDrawer() {
+        this.setState({
+            right: !this.state.right,
+        });
     }
+
     componentDidMount () {
         Axios.get('http://hallows-search-bar.us-east-2.elasticbeanstalk.com/searches')
         .then (res => {
@@ -78,6 +105,7 @@ class SearchBar extends React.Component {
                 cart: this.state.cart + event.detail,
             });
         });
+
         document.getElementById("searchInput").addEventListener("keyup", (e) => {
             if (e.keyCode === 13 && document.getElementById("searchInput") === document.activeElement) {
                 let itemName = document.getElementById("searchInput").value;
@@ -87,24 +115,23 @@ class SearchBar extends React.Component {
                     }
                 }
             }
-        })
+        });
 
     }
     render () {
         document.addEventListener('click', (event) => {
-            var isClickInside = document.getElementById("searchBar").contains(event.target);
-            if (!isClickInside) {
+            var isClickInsideSearch = document.getElementById("searchBar").contains(event.target);
+            if (!isClickInsideSearch) {
               setTimeout(function(){ document.getElementById("tab1").style.display = "block"; }, 280);
               setTimeout(function(){ document.getElementById("tab2").style.display = "block"; }, 280);
               setTimeout(function(){ document.getElementById("tab3").style.display = "block"; }, 280);
-            } else {
+            } else if (isClickInsideSearch){
               document.getElementById("tab1").style.display = "none";
               document.getElementById("tab2").style.display = "none";
               document.getElementById("tab3").style.display = "none";
             }
         });
         window.addEventListener("resize", this.updateDisplay);
-        const { anchorEl } = this.props;
         let isOpen = false;
         return (
             <div>
@@ -143,7 +170,7 @@ class SearchBar extends React.Component {
                             </datalist>
                         </Paper>
                         {
-                            this.state.divLength < 905 ?
+                            this.state.divLength < 1166 ?
                             (
                                 <div>
                                     <IconButton
@@ -152,11 +179,12 @@ class SearchBar extends React.Component {
                                         aria-haspopup="true"
                                         onClick={this.handleClick}
                                     >
-                                        <MoreVertIcon />
+                                        <MoreVertIcon id="vertIcon"/>
                                     </IconButton>
                                     <Menu
                                     open={this.state.isOpen}
-                                    anchorEl={anchorEl}
+                                    onClose={this.handleClose}
+                                    anchorEl={this.state.anchorEl}
                                     >
                                         <MenuItem>
                                             <IconButton className="iconPersonSize"
@@ -165,9 +193,14 @@ class SearchBar extends React.Component {
                                                 aria-label="account of current user"
                                                 aria-haspopup="true"
                                                 color="inherit"
+                                                onClick={this.toggleDrawer}
                                             >
-                                                <PersonIcon className="iconPerson"/>
+                                                <PersonIcon className="iconPerson" />
                                             </IconButton>
+                                            <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer} width={500}>
+                                            <MenuItem>Menu Item</MenuItem>
+                                            <MenuItem>Menu Item 2</MenuItem>
+                                            </Drawer>
                                         </MenuItem>
                                         <MenuItem>
                                             <IconButton aria-label="Cart" className="iconCartSize">
@@ -192,9 +225,56 @@ class SearchBar extends React.Component {
                                         aria-label="account of current user"
                                         aria-haspopup="true"
                                         color="inherit"
+                                        onClick={this.toggleDrawer}
                                     >
                                         <PersonIcon className="iconPerson"/>
                                     </IconButton>
+                                    <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer}>
+                                        <h2 id="drawerTitle">Account</h2>
+                                        <button id="drawerButton">SIGN IN OR CREATE ACCOUNT</button>
+                                        <List>
+                                            <ListItem button>
+                                                <ListItemIcon>
+                                                    <Icon  className="drawerIconEl" path={mdiCubeOutline}
+                                                        title="Order History"
+                                                        size={1}
+                                                        color="black"
+                                                    />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Order History" />
+                                            </ListItem>
+                                            <ListItem button>
+                                                <ListItemIcon>
+                                                    <Icon  className="drawerIconEl" path={mdiFormatListBulleted}
+                                                        title="My List"
+                                                        size={1}
+                                                        color="black"
+                                                    />
+                                                </ListItemIcon>
+                                                <ListItemText primary="My List" />
+                                            </ListItem>
+                                            <ListItem button>
+                                                <ListItemIcon>
+                                                    <Icon  className="drawerIconEl" path={mdiWrench}
+                                                        title="Installation & Services"
+                                                        size={1}
+                                                        color="black"
+                                                    />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Installation & Services" />
+                                            </ListItem>
+                                                <ListItem button>
+                                                <ListItemIcon>
+                                                    <Icon  className="drawerIconEl" path={mdiKnifeMilitary}
+                                                        title="Military Discount"
+                                                        size={1}
+                                                        color="black"
+                                                    />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Military Discount" />
+                                            </ListItem>
+                                        </List>
+                                    </Drawer>
                                     <IconButton aria-label="Cart" className="iconCartSize">
 
                                         <Badge badgeContent={this.state.cart} color="secondary">
@@ -215,6 +295,7 @@ class SearchBar extends React.Component {
         )
     }
 }
+
 ReactDom.render(<SearchBar />, document.getElementById("search"));
 
 
