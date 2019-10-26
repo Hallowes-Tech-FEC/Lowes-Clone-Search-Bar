@@ -10,6 +10,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import Icon from '@mdi/react';
 import Paper from '@material-ui/core/Paper';
 import StepLabel from "@material-ui/core/StepLabel";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { mdiCartOutline } from '@mdi/js';
 import './searchBar.css';
 
@@ -18,15 +21,49 @@ class SearchBar extends React.Component {
         super (props);
         this.state = {
             input: "",
-            possibleNames: []
-        }
+            possibleNames: [],
+            divLength: window.innerWidth,
+            isOpen: false,
+        };
+        this.updateDisplay = this.updateDisplay.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    updateDisplay() {
+        this.setState({
+            divLength: window.innerWidth
+        });
     }
 
     updateInput () {
         let newInput = document.getElementById("searchInput").value;
         this.setState({
             input: newInput,
-        })
+        });
+    }
+
+
+    showPopover(event) {
+        event.preventDefault();
+        this.props.togglePopover(event.currentTarget);
+    };
+
+
+    // handleRequestClose = () => {
+    //     this.props.togglePopover();
+    //   };
+
+
+
+    handleClick(isOpen) {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
+    handleClose() {
+
     }
 
     componentDidMount () {
@@ -36,8 +73,9 @@ class SearchBar extends React.Component {
             let items = res.data.map(item => item.name);
             this.setState({
                 possibleNames: items
-            })
-        })
+            });
+            
+        });
     }
 
     render () {
@@ -53,6 +91,9 @@ class SearchBar extends React.Component {
               document.getElementById("tab3").style.display = "none";
             }
         });
+        window.addEventListener("resize", this.updateDisplay);
+        const { anchorEl } = this.props;
+        let isOpen = false;
         return (
             <div>
                 <AppBar position="static" className="header" color='inherit'>
@@ -85,26 +126,71 @@ class SearchBar extends React.Component {
                                 }
                             </datalist>
                         </Paper>
-                        <div className="iconGroupHead">            
-                            <IconButton className="iconPersonSize"
-                                title="MyHallowes"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-haspopup="true"
-                                color="inherit"
-                            >
-                                <PersonIcon className="iconPerson"/>
-                            </IconButton>
-                            <IconButton aria-label="Cart" className="iconCartSize">
-                                <Badge badgeContent={3} color="secondary">
-                                    <Icon  className="iconCart" path={mdiCartOutline}
-                                        title="Cart Count"
-                                        size={1}
-                                        color="black"
-                                    />
-                                </Badge>
-                            </IconButton>
-                        </div>
+                        {
+                            this.state.divLength < 905 ?
+                            (
+                                <div>
+                                    <IconButton
+                                        aria-label="more"
+                                        aria-controls="long-menu"
+                                        aria-haspopup="true"
+                                        onClick={this.handleClick}
+                                    >
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                    open={this.state.isOpen}
+                                    anchorEl={anchorEl}
+                                    >
+                                        <MenuItem>
+                                            <IconButton className="iconPersonSize"
+                                                title="MyHallowes"
+                                                edge="end"
+                                                aria-label="account of current user"
+                                                aria-haspopup="true"
+                                                color="inherit"
+                                            >
+                                                <PersonIcon className="iconPerson"/>
+                                            </IconButton>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <IconButton aria-label="Cart" className="iconCartSize">
+                                                <Badge badgeContent={3} color="secondary">
+                                                    <Icon  className="iconCart" path={mdiCartOutline}
+                                                        title="Cart Count"
+                                                        size={1}
+                                                        color="black"
+                                                    />
+                                                </Badge>
+                                            </IconButton>
+                                        </MenuItem>
+                                    </Menu>
+                                </div>
+                            )
+                            :
+                            (
+                                <div className="iconGroupHead">            
+                                    <IconButton className="iconPersonSize"
+                                        title="MyHallowes"
+                                        edge="end"
+                                        aria-label="account of current user"
+                                        aria-haspopup="true"
+                                        color="inherit"
+                                    >
+                                        <PersonIcon className="iconPerson"/>
+                                    </IconButton>
+                                    <IconButton aria-label="Cart" className="iconCartSize">
+                                        <Badge badgeContent={3} color="secondary">
+                                            <Icon  className="iconCart" path={mdiCartOutline}
+                                                title="Cart Count"
+                                                size={1}
+                                                color="black"
+                                            />
+                                        </Badge>
+                                    </IconButton>
+                                </div>
+                            )
+                        }
                     </Toolbar>
                 </AppBar>
             </div>
