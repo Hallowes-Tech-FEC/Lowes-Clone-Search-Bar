@@ -16,25 +16,6 @@ db.connect(function (err) {
     console.log("Connected to database");
 })
 
-// const getItems = function(callback) {
-//     db_pool.getConnection(function(err, connection){
-//         if (err) {
-//             connection.end();
-//             callback(err, null);
-//         }
-//         let queryString = "SELECT * FROM items";
-//         connection.query(queryString, {}, (err2, results, field) => {
-//             if (err2) {
-//                 callback (err, null);
-//             } else {
-//                 callback (null, results);
-//             }
-//             connection.end();
-//         })
-//         connection.end();
-//     })
-// }
-
 const getItems = function(callback) {
     let queryString = "SELECT * FROM items";
     db.query(queryString, {}, (err, results, field) => {
